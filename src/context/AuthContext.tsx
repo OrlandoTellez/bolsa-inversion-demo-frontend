@@ -15,6 +15,26 @@ interface AuthContextType {
     isLoading: boolean;
 }
 
+// Usuarios de prueba (para desarrollo sin backend)
+const mockUsers = [
+    {
+        id: '1',
+        name: 'Administrador Demo',
+        email: 'admin@bolsa.ni',
+        username: 'admin',
+        password: 'admin123',
+        role: 'admin' as const
+    },
+    {
+        id: '2',
+        name: 'Usuario Demo',
+        email: 'usuario@bolsa.ni',
+        username: 'usuario',
+        password: 'usuario123',
+        role: 'user' as const
+    }
+];
+
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
@@ -35,6 +55,22 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     const login = async (username: string, password: string): Promise<boolean> => {
         setIsLoading(true);
+
+        // Primero intentar con usuarios de prueba
+        const mockUser = mockUsers.find(
+            u => (u.username === username || u.email === username) && u.password === password
+        );
+
+        if (mockUser) {
+            // Usuario de prueba encontrado
+            const { password: _, ...userWithoutPassword } = mockUser;
+            setUser(userWithoutPassword);
+            localStorage.setItem('user', JSON.stringify(userWithoutPassword));
+            setIsLoading(false);
+            return true;
+        }
+
+        // Si no es un usuario de prueba, intentar con el backend
         try {
             const res = await fetch(`${import.meta.env.VITE_API_URL}/auth/login`, {
                 method: 'POST',

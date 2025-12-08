@@ -12,9 +12,9 @@ export const PrivateRoute = ({ children }: PrivateRouteProps) => {
         return <div style={{ textAlign: 'center', marginTop: '2rem' }}>Cargando...</div>
     }
 
-    // if (!user) {
-    //     return <Navigate to="/auth/login" replace />
-    // }
+    if (!user) {
+        return <Navigate to="/auth/login" replace />
+    }
 
     return children
 }

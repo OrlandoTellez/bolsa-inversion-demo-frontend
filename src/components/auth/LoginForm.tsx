@@ -5,8 +5,8 @@ import { useAuth } from "../../context/AuthContext";
 import { Input } from "../common/Input";
 
 export function LoginForm() {
-    const [username, setUsername] = useState('orlandogabrieltellez@gmail.com');
-    const [password, setPassword] = useState('123456');
+    const [username, setUsername] = useState('admin@bolsa.ni');
+    const [password, setPassword] = useState('admin123');
     const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState('');
     const { login, isLoading } = useAuth();
@@ -23,7 +23,7 @@ export function LoginForm() {
 
         try {
             const success = await login(username, password);
-            if (true) {
+            if (success) {
                 navigate('/');
             } else {
                 setError('Credenciales incorrectas');
