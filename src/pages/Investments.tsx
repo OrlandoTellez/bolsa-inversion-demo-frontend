@@ -87,7 +87,7 @@ export const Investments = () => {
             <div className="space-y-6">
                 {/* Header */}
                 <div>
-                    <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent mb-2">
+                    <h1 className="text-3xl font-bold text-white bg-clip-text  mb-2">
                         Inversiones
                     </h1>
                     <p className="text-gray-400">Gestiona tus compras y ventas de acciones</p>
@@ -103,7 +103,7 @@ export const Investments = () => {
                                 className={cn(
                                     "flex items-center gap-2 px-4 py-2 rounded-xl font-medium transition-all whitespace-nowrap",
                                     activeTab === tab.value
-                                        ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg"
+                                        ? "bg-[#111418] text-white shadow-lg"
                                         : "text-gray-400 hover:text-white hover:bg-white/5"
                                 )}
                             >

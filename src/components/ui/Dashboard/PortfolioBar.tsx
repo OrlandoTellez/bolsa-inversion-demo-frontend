@@ -9,7 +9,7 @@ export const PortfolioBar = () => {
     const isPositive = totalGainLoss >= 0;
 
     return (
-        <div className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 p-6 rounded-2xl shadow-2xl mb-6 relative overflow-hidden">
+        <div className="bg-[#161a1e] p-6 rounded-2xl shadow-2xl mb-6 relative overflow-hidden">
             {/* Animated background effect */}
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer"></div>
 

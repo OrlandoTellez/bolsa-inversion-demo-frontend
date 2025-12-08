@@ -52,7 +52,7 @@ export const Profile = () => {
     return (
         <div>
             <div className="mb-6">
-                <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent mb-2">
+                <h1 className="text-3xl font-bold text-white bg-clip-text mb-2">
                     Mi Perfil
                 </h1>
                 <p className="text-gray-400">Gestiona tu información personal y preferencias</p>

@@ -40,7 +40,7 @@ export const Consultations = () => {
     return (
         <div>
             <div className="mb-6">
-                <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent mb-2">
+                <h1 className="text-3xl font-bold text-white bg-clip-text mb-2">
                     Consultas Avanzadas
                 </h1>
                 <p className="text-gray-400">Búsqueda detallada con filtros personalizados</p>
@@ -93,7 +93,7 @@ export const Consultations = () => {
                     <div className="flex items-end gap-2">
                         <button
                             onClick={() => setShowResults(true)}
-                            className="flex-1 flex items-center justify-center gap-2 h-10 px-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl font-medium hover:shadow-lg transition-all"
+                            className="flex-1 flex items-center justify-center gap-2 h-10 px-4 bg-[#16412c] text-white rounded-xl font-medium hover:shadow-lg transition-all"
                         >
                             <Search className="h-4 w-4" />
                             Buscar

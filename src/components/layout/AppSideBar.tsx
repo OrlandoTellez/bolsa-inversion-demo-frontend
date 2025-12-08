@@ -19,7 +19,7 @@ export function AppSidebar({ onLogout, collapsed, onToggle }: AppSidebarProps) {
 
     const getNavCls = (active: boolean) =>
         active
-            ? "bg-[#fff] text-black "
+            ? "bg-[#142a2c] text-[#1fe066] "
             : "text-white";
 
     return (
