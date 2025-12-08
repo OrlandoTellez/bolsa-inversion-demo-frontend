@@ -29,7 +29,7 @@ export function DashboardLayout({ children, }: DashboardLayoutProps) {
                 style={{ marginLeft: collapsed ? sidebarCollapsedWidth : sidebarWidth }}
             >
                 {/* Header */}
-                <header className="h-16 bg-[#14161a] text-white border-b border-l border-gray-700 flex items-center justify-between px-6 sticky top-0 z-10">
+                <header className="h-16 bg-[#14161a] text-white border-b border-l border-gray-700 flex items-center justify-between px-6 sticky top-0 z-100">
                     <div className="flex items-center space-x-4">
                         {/* Buscador */}
                         <div className="hidden md:flex items-center space-x-2 max-w-md">
