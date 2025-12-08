@@ -3,6 +3,22 @@ import { LoginForm } from "../components/auth/LoginForm"
 import App from "../App"
 import { PrivateRoute } from "./PrivateRoutes"
 import { Dashboard } from "../pages/Dashboard"
+import { Investments } from "../pages/Investments"
+import {
+    Calendar,
+    Users,
+    Activity,
+    BarChart3,
+} from "lucide-react";
+
+export const navigationItems = [
+    { title: "Dashboard", url: "/", icon: BarChart3 },
+    { title: "Inversiones", url: "/inversiones", icon: Calendar },
+    { title: "Análisis", url: "/analisis", icon: Users },
+    { title: "Educación", url: "/educacion", icon: Activity },
+    { title: "Consultas", url: "/consultas", icon: Activity },
+];
+
 
 export const AppRoutes = () => {
     return (
@@ -15,6 +31,15 @@ export const AppRoutes = () => {
                     element={
                         <PrivateRoute>
                             <Dashboard />
+                        </PrivateRoute>
+                    }
+                />
+
+                <Route
+                    path="/inversiones"
+                    element={
+                        <PrivateRoute>
+                            <Investments />
                         </PrivateRoute>
                     }
                 />

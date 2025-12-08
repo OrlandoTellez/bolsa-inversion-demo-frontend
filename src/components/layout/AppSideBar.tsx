@@ -1,22 +1,11 @@
 import { NavLink } from "react-router-dom";
 import {
-    Calendar,
-    Users,
-    Activity,
-    BarChart3,
     LogOut,
     UserCircle,
     FileText,
 } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
-
-const navigationItems = [
-    { title: "Dashboard", url: "/", icon: BarChart3 },
-    { title: "Inversiones", url: "/a#a", icon: Calendar },
-    { title: "Análisis", url: "/b#b", icon: Users },
-    { title: "Educación", url: "/c#c", icon: Activity },
-    { title: "Consultas", url: "/d#s", icon: Activity },
-];
+import { navigationItems } from "../../routes/AppRoutes";
 
 const adminItems = [{ title: "Reportes", url: "/reports", icon: FileText }];
 
