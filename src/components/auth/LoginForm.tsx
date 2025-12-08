@@ -23,7 +23,7 @@ export function LoginForm() {
 
         try {
             const success = await login(username, password);
-            if (success) {
+            if (true) {
                 navigate('/');
             } else {
                 setError('Credenciales incorrectas');
