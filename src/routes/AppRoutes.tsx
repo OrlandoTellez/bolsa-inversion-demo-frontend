@@ -10,6 +10,7 @@ import {
     Activity,
     BarChart3,
 } from "lucide-react";
+import { Analisys } from "../pages/Analisys"
 
 export const navigationItems = [
     { title: "Dashboard", url: "/", icon: BarChart3 },
@@ -43,6 +44,16 @@ export const AppRoutes = () => {
                         </PrivateRoute>
                     }
                 />
+
+                <Route
+                    path="/analisis"
+                    element={
+                        <PrivateRoute>
+                            <Analisys />
+                        </PrivateRoute>
+                    }
+                />
+
             </Route>
         </Routes>
     )
