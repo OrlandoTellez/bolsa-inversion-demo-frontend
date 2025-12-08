@@ -2,12 +2,11 @@ import { NavLink } from "react-router-dom";
 import {
     LogOut,
     UserCircle,
-    FileText,
 } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 import { navigationItems } from "../../routes/AppRoutes";
-
-const adminItems = [{ title: "Reportes", url: "/reports", icon: FileText }];
+import { adminItems } from "../../routes/AppRoutes";
+import { profileItems } from "../../routes/AppRoutes";
 
 interface AppSidebarProps {
     onLogout: () => void;
@@ -95,13 +94,21 @@ export function AppSidebar({ onLogout, collapsed, onToggle }: AppSidebarProps) {
             <div className="bg-[#14161a] p-4 border-t border-gray-700">
                 {!collapsed ? (
                     <div className="space-y-4">
-                        <div className="flex items-center space-x-3 p-3 bg-gray-100 rounded-lg">
-                            <UserCircle className="w-8 h-8 text-[#2977f5]" />
-                            <div className="flex-1 min-w-0">
-                                <p className="text-sm font-medium truncate">{user?.name}</p>
-                                <p className="text-xs text-gray-500 truncate">{user?.role}</p>
-                            </div>
-                        </div>
+                        {
+                            profileItems.map((item) => (
+                                <NavLink
+                                    key={item.title}
+                                    to={item.url}
+                                    className="flex items-center space-x-3 p-3 bg-gray-100 rounded-lg"
+                                >
+                                    <UserCircle className="w-8 h-8 text-[#2977f5]" />
+                                    <div className="flex-1 min-w-0">
+                                        <p className="text-sm font-medium truncate">{user?.name}</p>
+                                        <p className="text-xs text-gray-500 truncate">{user?.role}</p>
+                                    </div>
+                                </NavLink>
+                            ))
+                        }
                         <button
                             onClick={onLogout}
                             className="w-full flex items-center p-2 text-red-600 hover:bg-red-100 rounded-lg"
