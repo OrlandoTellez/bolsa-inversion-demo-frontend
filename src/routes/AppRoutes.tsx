@@ -11,6 +11,8 @@ import {
     BarChart3,
 } from "lucide-react";
 import { Analisys } from "../pages/Analisys"
+import { NotFound } from "../pages/NotFound"
+import { Education } from "../pages/Education"
 
 export const navigationItems = [
     { title: "Dashboard", url: "/", icon: BarChart3 },
@@ -54,6 +56,17 @@ export const AppRoutes = () => {
                     }
                 />
 
+                <Route
+                    path="/educacion"
+                    element={
+                        <PrivateRoute>
+                            <Education />
+                        </PrivateRoute>
+                    }
+                />
+
+
+                <Route path="*" element={<NotFound />} />
             </Route>
         </Routes>
     )
