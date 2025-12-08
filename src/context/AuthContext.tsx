@@ -2,10 +2,10 @@ import { createContext, useContext, useState, useEffect } from 'react';
 
 interface User {
     id: string;
+    name: string
     email: string;
     username: string;
     role: 'admin' | 'user';
-    hospital: string;
 }
 
 interface AuthContextType {
