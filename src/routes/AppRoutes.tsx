@@ -13,6 +13,7 @@ import {
 import { Analisys } from "../pages/Analisys"
 import { NotFound } from "../pages/NotFound"
 import { Education } from "../pages/Education"
+import { Consultations } from "../pages/Consultations"
 
 export const navigationItems = [
     { title: "Dashboard", url: "/", icon: BarChart3 },
@@ -65,6 +66,14 @@ export const AppRoutes = () => {
                     }
                 />
 
+                <Route
+                    path="/consultas"
+                    element={
+                        <PrivateRoute>
+                            <Consultations />
+                        </PrivateRoute>
+                    }
+                />
 
                 <Route path="*" element={<NotFound />} />
             </Route>
