@@ -4,6 +4,7 @@ import { Input } from "../components/common/Input";
 import { ArrowUpRight, ArrowDownRight, Search, TrendingUp, TrendingDown, Building2, Users, X } from "lucide-react";
 import { cn } from "../utils/cn";
 import { usePortfolio } from "../context/PortafolioContext";
+import { ResponsiveContainer, AreaChart, Area, YAxis } from "recharts";
 
 const banks = [
     { value: "bac", label: "BAC Nicaragua" },
@@ -17,6 +18,20 @@ const investors = [
     { id: 2, name: "Roberto Martínez", portfolio: 1250000, roi: 8.2, focus: "Banca" },
     { id: 3, name: "Ana López", portfolio: 520000, roi: 15.8, focus: "Agrícola" },
     { id: 4, name: "Carlos Mendoza", portfolio: 980000, roi: 10.1, focus: "Diversificado" },
+];
+
+// Mock data for mini chart
+const miniChartData = [
+    { value: 95 },
+    { value: 98 },
+    { value: 94 },
+    { value: 99 },
+    { value: 102 },
+    { value: 105 },
+    { value: 103 },
+    { value: 107 },
+    { value: 110 },
+    { value: 108 },
 ];
 
 export const Investments = () => {
@@ -222,11 +237,19 @@ export const Investments = () => {
                                         </p>
                                     </div>
                                 </div>
-                                <div className="h-48 flex items-center justify-center bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-md border border-white/5">
-                                    <div className="text-center">
-                                        <TrendingUp className="w-12 h-12 text-blue-400 mx-auto mb-2" />
-                                        <p className="text-gray-400 text-sm">Gráfico de tendencia</p>
-                                    </div>
+                                <div className="h-[200px]">
+                                    <ResponsiveContainer width="100%" height="100%">
+                                        <AreaChart data={miniChartData} margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
+                                            <defs>
+                                                <linearGradient id="miniGradient" x1="0" y1="0" x2="0" y2="1">
+                                                    <stop offset="0%" stopColor="#3b82f6" stopOpacity={0.3} />
+                                                    <stop offset="100%" stopColor="#3b82f6" stopOpacity={0} />
+                                                </linearGradient>
+                                            </defs>
+                                            <YAxis hide domain={["dataMin - 2", "dataMax + 2"]} />
+                                            <Area type="monotone" dataKey="value" stroke="#3b82f6" strokeWidth={2} fill="url(#miniGradient)" />
+                                        </AreaChart>
+                                    </ResponsiveContainer>
                                 </div>
                             </div>
                         )}
