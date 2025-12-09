@@ -1,25 +1,44 @@
 import {
     TrendingUp,
     TrendingDown,
+    Wallet,
 } from "lucide-react";
 import { usePortfolio } from "../../../context/PortafolioContext";
 
 export const PortfolioBar = () => {
-    const { totalValue, totalGainLoss, totalGainLossPercent } = usePortfolio();
+    const { balance, totalValue, totalGainLoss, totalGainLossPercent } = usePortfolio();
     const isPositive = totalGainLoss >= 0;
 
+    // Total portfolio = cash balance + holdings value
+    const totalPortfolio = balance + totalValue;
+
     return (
-        <div className="bg-[#161a1e] p-6 rounded-sm shadow-2xl mb-6 relative overflow-hidden">
+        <div className="bg-[#161a1e] p-6 rounded-sm shadow-2xl mb-6 relative overflow-hidden border border-white/10">
             {/* Animated background effect */}
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer"></div>
 
             <div className="relative z-10 flex flex-wrap items-center justify-between gap-4">
-                <div>
-                    <p className="text-white/80 text-sm font-medium mb-1">Valor Total del Portafolio</p>
-                    <h2 className="text-4xl font-bold text-white">
-                        ${totalValue.toLocaleString("es-NI", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                    </h2>
+                <div className="flex gap-8">
+                    <div>
+                        <p className="text-white/80 text-sm font-medium mb-1">Valor Total del Portafolio</p>
+                        <h2 className="text-4xl font-bold text-white">
+                            C$ {totalPortfolio.toLocaleString("es-NI", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                        </h2>
+                    </div>
+
+                    <div className="hidden md:block w-px bg-white/10"></div>
+
+                    <div>
+                        <p className="text-gray-400 text-sm font-medium mb-1 flex items-center gap-2">
+                            <Wallet className="w-4 h-4" />
+                            Saldo Disponible
+                        </p>
+                        <h3 className="text-2xl font-semibold text-white/90">
+                            C$ {balance.toLocaleString("es-NI", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                        </h3>
+                    </div>
                 </div>
+
                 <div className="flex items-center gap-3">
                     <div className={`flex items-center gap-2 px-4 py-2 rounded-xl ${isPositive ? "bg-green-500/20 backdrop-blur-sm" : "bg-red-500/20 backdrop-blur-sm"}`}>
                         {isPositive ? (
@@ -29,7 +48,7 @@ export const PortfolioBar = () => {
                         )}
                         <div className="text-right">
                             <p className={`text-lg font-bold ${isPositive ? "text-green-200" : "text-red-200"}`}>
-                                {isPositive ? "+" : ""}${totalGainLoss.toFixed(2)}
+                                {isPositive ? "+" : ""}C$ {totalGainLoss.toLocaleString("es-NI", { minimumFractionDigits: 2 })}
                             </p>
                             <p className={`text-sm ${isPositive ? "text-green-300" : "text-red-300"}`}>
                                 {isPositive ? "+" : ""}{totalGainLossPercent.toFixed(2)}%

@@ -31,7 +31,7 @@ export const TransactionsTable = () => {
                                 recentTransactions.map((transaction, index) => (
                                     <tr key={index} className="hover:bg-white/5 transition-colors">
                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                                            {new Date(transaction.date).toLocaleDateString("es-NI")}
+                                            {transaction.date}
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <span className={`px-3 py-1 rounded-full text-xs font-semibold ${transaction.type === "compra"
@@ -51,10 +51,10 @@ export const TransactionsTable = () => {
                                             {transaction.shares}
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-                                            ${transaction.price.toFixed(2)}
+                                            C$ {transaction.price.toFixed(2)}
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-white">
-                                            ${(transaction.shares * transaction.price).toFixed(2)}
+                                            C$ {transaction.total.toLocaleString("es-NI", { minimumFractionDigits: 2 })}
                                         </td>
                                     </tr>
                                 ))

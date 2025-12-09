@@ -4,21 +4,24 @@ import { cn } from "../../../utils/cn";
 import { usePortfolio } from "../../../context/PortafolioContext";
 
 const portfolioData = [
-    { date: "Ene", value: 185000 },
-    { date: "Feb", value: 192000 },
-    { date: "Mar", value: 188000 },
-    { date: "Abr", value: 205000 },
-    { date: "May", value: 215000 },
-    { date: "Jun", value: 228000 },
+    { date: "Ene", value: 8500 },
+    { date: "Feb", value: 9200 },
+    { date: "Mar", value: 8800 },
+    { date: "Abr", value: 9500 },
+    { date: "May", value: 10500 },
+    { date: "Jun", value: 11800 },
 ];
 
 export const PortfolioSummary = () => {
-    const { totalValue, totalGainLoss, totalGainLossPercent } = usePortfolio();
+    const { balance, totalValue, totalGainLoss, totalGainLossPercent } = usePortfolio();
 
     const isPositive = totalGainLoss >= 0;
 
+    // Total portfolio = cash + holdings value
+    const totalPortfolio = balance + totalValue;
+
     // Add current value to chart data
-    const chartData = [...portfolioData, { date: "Jul", value: totalValue }];
+    const chartData = [...portfolioData, { date: "Jul", value: totalPortfolio }];
 
     return (
         <div className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-md p-6 animate-fade-in">
@@ -26,7 +29,7 @@ export const PortfolioSummary = () => {
                 <div>
                     <p className="text-sm font-medium text-gray-400">Valor Total del Portafolio</p>
                     <h2 className="mt-1 text-3xl font-bold tracking-tight text-white">
-                        C$ {totalValue.toLocaleString("es-NI", { minimumFractionDigits: 2 })}
+                        C$ {totalPortfolio.toLocaleString("es-NI", { minimumFractionDigits: 2 })}
                     </h2>
                     <div className="mt-2 flex items-center gap-2">
                         <span
@@ -76,7 +79,7 @@ export const PortfolioSummary = () => {
                             tickLine={false}
                             tick={{ fontSize: 12, fill: "#9ca3af" }}
                         />
-                        <YAxis hide domain={["dataMin - 10000", "dataMax + 10000"]} />
+                        <YAxis hide domain={["dataMin - 1000", "dataMax + 1000"]} />
                         <Tooltip
                             content={({ active, payload }) => {
                                 if (active && payload && payload.length) {

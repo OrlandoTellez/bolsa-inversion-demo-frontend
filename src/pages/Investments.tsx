@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { PortfolioBar } from "../components/ui/Dashboard/PortfolioBar";
 import { Input } from "../components/common/Input";
-import { ArrowUpRight, ArrowDownRight, Search, TrendingUp, TrendingDown, Building2, Users, X } from "lucide-react";
+import { ArrowUpRight, ArrowDownRight, Search, TrendingUp, TrendingDown, Building2, Users, X, History } from "lucide-react";
 import { cn } from "../utils/cn";
 import { usePortfolio } from "../context/PortafolioContext";
 import { ResponsiveContainer, AreaChart, Area, YAxis } from "recharts";
@@ -35,7 +35,7 @@ const miniChartData = [
 ];
 
 export const Investments = () => {
-    const { stocks, holdings, balance, buyStock, sellStock } = usePortfolio();
+    const { stocks, holdings, balance, transactions, buyStock, sellStock } = usePortfolio();
 
     const [activeTab, setActiveTab] = useState("comprar");
     const [selectedStock, setSelectedStock] = useState<string>("");
@@ -54,11 +54,11 @@ export const Investments = () => {
     const selectedStockData = stocks.find((s) => s.ticker === selectedStock);
     const sellHolding = holdings.find((h) => h.ticker === sellTicker);
 
-    const handleBuy = () => {
+    const handleBuy = async () => {
         if (!selectedStock || !quantity || !selectedBank) return;
 
         const bankLabel = banks.find((b) => b.value === selectedBank)?.label || selectedBank;
-        const success = buyStock(selectedStock, Number(quantity), bankLabel);
+        const success = await buyStock(selectedStock, Number(quantity), bankLabel);
 
         if (success) {
             setSelectedStock("");
@@ -74,11 +74,11 @@ export const Investments = () => {
         setSellModalOpen(true);
     };
 
-    const handleSellConfirm = () => {
+    const handleSellConfirm = async () => {
         if (!sellTicker || !sellQuantity || !sellBank) return;
 
         const bankLabel = banks.find((b) => b.value === sellBank)?.label || sellBank;
-        const success = sellStock(sellTicker, Number(sellQuantity), bankLabel);
+        const success = await sellStock(sellTicker, Number(sellQuantity), bankLabel);
 
         if (success) {
             setSellModalOpen(false);
@@ -91,6 +91,7 @@ export const Investments = () => {
     const tabs = [
         { value: "comprar", label: "Comprar Acciones", icon: TrendingUp },
         { value: "vender", label: "Vender Acciones", icon: TrendingDown },
+        { value: "historial", label: "Historial", icon: History },
         { value: "buscar", label: "Buscar Precios", icon: Search },
         { value: "inversionistas", label: "Inversionistas", icon: Users },
     ];
@@ -206,8 +207,8 @@ export const Investments = () => {
                                     className={cn(
                                         "w-full flex items-center justify-center gap-2 px-4 py-3 rounded-md font-semibold transition-all",
                                         !selectedStock || !quantity || !selectedBank || (selectedStockData && selectedStockData.price * Number(quantity) > balance)
-                                            ? "bg-[#1b7e43] text-gray-400 cursor-not-allowed"
-                                            : "bg-[#1fe066] from-green-500 to-emerald-600 text-white hover:shadow-lg hover:scale-105"
+                                            ? "bg-gray-600 text-gray-400 cursor-not-allowed"
+                                            : "bg-gradient-to-r from-green-500 to-emerald-600 text-white hover:shadow-lg hover:scale-105"
                                     )}
                                     disabled={!selectedStock || !quantity || !selectedBank || (selectedStockData && selectedStockData.price * Number(quantity) > balance)}
                                     onClick={handleBuy}
@@ -318,6 +319,102 @@ export const Investments = () => {
                                         </div>
                                     );
                                 })}
+                            </div>
+                        )}
+                    </div>
+                )}
+
+                {/* Tab Content - Historial de Transacciones */}
+                {activeTab === "historial" && (
+                    <div className="space-y-6 animate-fade-in">
+                        <div className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-md p-6">
+                            <div className="flex items-center justify-between mb-6">
+                                <h3 className="text-lg font-semibold text-white">Historial de Transacciones</h3>
+                                <span className="px-3 py-1 rounded-full bg-blue-500/20 text-blue-400 text-sm">
+                                    {transactions.length} transacciones
+                                </span>
+                            </div>
+
+                            {transactions.length === 0 ? (
+                                <div className="text-center py-12">
+                                    <History className="w-16 h-16 text-gray-500 mx-auto mb-4" />
+                                    <p className="text-gray-400 text-lg">No hay transacciones registradas</p>
+                                    <p className="text-gray-500 text-sm mt-2">Realiza tu primera compra para comenzar</p>
+                                </div>
+                            ) : (
+                                <div className="overflow-x-auto">
+                                    <table className="w-full">
+                                        <thead>
+                                            <tr className="border-b border-white/10">
+                                                <th className="text-left text-gray-400 text-sm font-medium pb-3">Tipo</th>
+                                                <th className="text-left text-gray-400 text-sm font-medium pb-3">Acción</th>
+                                                <th className="text-left text-gray-400 text-sm font-medium pb-3">Cantidad</th>
+                                                <th className="text-left text-gray-400 text-sm font-medium pb-3">Precio</th>
+                                                <th className="text-left text-gray-400 text-sm font-medium pb-3">Total</th>
+                                                <th className="text-left text-gray-400 text-sm font-medium pb-3">Banco</th>
+                                                <th className="text-left text-gray-400 text-sm font-medium pb-3">Fecha</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {transactions.map((tx) => (
+                                                <tr key={tx.id} className="border-b border-white/5 hover:bg-white/5 transition-colors">
+                                                    <td className="py-4">
+                                                        <span className={cn(
+                                                            "px-2 py-1 rounded-md text-xs font-semibold uppercase",
+                                                            tx.type === "compra"
+                                                                ? "bg-green-500/20 text-green-400"
+                                                                : "bg-red-500/20 text-red-400"
+                                                        )}>
+                                                            {tx.type}
+                                                        </span>
+                                                    </td>
+                                                    <td className="py-4">
+                                                        <div>
+                                                            <p className="text-white font-medium">{tx.ticker}</p>
+                                                            <p className="text-gray-500 text-sm">{tx.company}</p>
+                                                        </div>
+                                                    </td>
+                                                    <td className="py-4 text-gray-300">{tx.shares}</td>
+                                                    <td className="py-4 text-gray-300">C$ {tx.price.toFixed(2)}</td>
+                                                    <td className="py-4">
+                                                        <span className={cn(
+                                                            "font-semibold",
+                                                            tx.type === "compra" ? "text-red-400" : "text-green-400"
+                                                        )}>
+                                                            {tx.type === "compra" ? "-" : "+"}C$ {tx.total.toLocaleString("es-NI", { minimumFractionDigits: 2 })}
+                                                        </span>
+                                                    </td>
+                                                    <td className="py-4 text-gray-400 text-sm">{tx.bank}</td>
+                                                    <td className="py-4 text-gray-400 text-sm">{tx.date}</td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            )}
+                        </div>
+
+                        {/* Summary Card */}
+                        {transactions.length > 0 && (
+                            <div className="grid gap-4 md:grid-cols-3">
+                                <div className="bg-gradient-to-br from-green-500/10 to-emerald-500/10 border border-green-500/20 rounded-md p-4">
+                                    <p className="text-gray-400 text-sm mb-1">Total Compras</p>
+                                    <p className="text-2xl font-bold text-green-400">
+                                        {transactions.filter(t => t.type === "compra").length}
+                                    </p>
+                                </div>
+                                <div className="bg-gradient-to-br from-red-500/10 to-rose-500/10 border border-red-500/20 rounded-md p-4">
+                                    <p className="text-gray-400 text-sm mb-1">Total Ventas</p>
+                                    <p className="text-2xl font-bold text-red-400">
+                                        {transactions.filter(t => t.type === "venta").length}
+                                    </p>
+                                </div>
+                                <div className="bg-gradient-to-br from-blue-500/10 to-cyan-500/10 border border-blue-500/20 rounded-md p-4">
+                                    <p className="text-gray-400 text-sm mb-1">Volumen Total</p>
+                                    <p className="text-2xl font-bold text-blue-400">
+                                        C$ {transactions.reduce((acc, t) => acc + t.total, 0).toLocaleString("es-NI", { minimumFractionDigits: 2 })}
+                                    </p>
+                                </div>
                             </div>
                         )}
                     </div>

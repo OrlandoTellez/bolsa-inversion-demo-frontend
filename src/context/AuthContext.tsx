@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
+import { authAPI } from '../services/api';
 
 interface User {
     id: string;
@@ -13,41 +14,28 @@ interface AuthContextType {
     login: (email: string, password: string) => Promise<boolean>;
     logout: () => void;
     isLoading: boolean;
+    token: string | null;
 }
-
-// Usuarios de prueba (para desarrollo sin backend)
-const mockUsers = [
-    {
-        id: '1',
-        name: 'Administrador Demo',
-        email: 'admin@bolsa.ni',
-        username: 'admin',
-        password: 'admin123',
-        role: 'admin' as const
-    },
-    {
-        id: '2',
-        name: 'Usuario Demo',
-        email: 'usuario@bolsa.ni',
-        username: 'usuario',
-        password: 'usuario123',
-        role: 'user' as const
-    }
-];
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const [user, setUser] = useState<User | null>(null);
+    const [token, setToken] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
+        // Check for saved session
         const savedUser = localStorage.getItem('user');
-        if (savedUser) {
+        const savedToken = localStorage.getItem('access_token');
+
+        if (savedUser && savedToken) {
             try {
                 setUser(JSON.parse(savedUser));
+                setToken(savedToken);
             } catch (error) {
                 localStorage.removeItem('user');
+                localStorage.removeItem('access_token');
             }
         }
         setIsLoading(false);
@@ -56,44 +44,20 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const login = async (username: string, password: string): Promise<boolean> => {
         setIsLoading(true);
 
-        // Primero intentar con usuarios de prueba
-        const mockUser = mockUsers.find(
-            u => (u.username === username || u.email === username) && u.password === password
-        );
-
-        if (mockUser) {
-            // Usuario de prueba encontrado
-            const { password: _, ...userWithoutPassword } = mockUser;
-            setUser(userWithoutPassword);
-            localStorage.setItem('user', JSON.stringify(userWithoutPassword));
-            setIsLoading(false);
-            return true;
-        }
-
-        // Si no es un usuario de prueba, intentar con el backend
         try {
-            const res = await fetch(`${import.meta.env.VITE_API_URL}/auth/login`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                credentials: 'include',
-                body: JSON.stringify({ username: username, password: password })
-            });
+            // Call the backend API
+            const response = await authAPI.login({ username, password });
 
-            console.log(res);
+            // Store user and token
+            setUser(response.user);
+            setToken(response.access_token);
+            localStorage.setItem('user', JSON.stringify(response.user));
+            localStorage.setItem('access_token', response.access_token);
 
-            if (!res.ok) {
-                setIsLoading(false);
-                return false;
-            }
-
-            const data = await res.json();
-            // data.user contiene toda la información
-            setUser(data.user);
-            localStorage.setItem('user', JSON.stringify(data.user));
             setIsLoading(false);
             return true;
         } catch (err) {
-            console.error(err);
+            console.error('Login error:', err);
             setIsLoading(false);
             return false;
         }
@@ -102,11 +66,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     const logout = () => {
         setUser(null);
+        setToken(null);
         localStorage.removeItem('user');
+        localStorage.removeItem('access_token');
     };
 
     return (
-        <AuthContext.Provider value={{ user, login, logout, isLoading }}>
+        <AuthContext.Provider value={{ user, login, logout, isLoading, token }}>
             {children}
         </AuthContext.Provider>
     );
