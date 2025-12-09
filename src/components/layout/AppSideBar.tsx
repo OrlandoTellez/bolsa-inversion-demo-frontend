@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 import {
     LogOut,
+    TrendingUp,
     UserCircle,
 } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
@@ -24,13 +25,14 @@ export function AppSidebar({ onLogout, collapsed, onToggle }: AppSidebarProps) {
 
     return (
         <div
-            className={`flex flex-col h-screen fixed bg-[#14161a] border-r transition-all duration-300 ${collapsed ? "w-16" : "w-64"
+            className={`flex flex-col h-screen fixed bg-[#14161a] border-r border-white/10  transition-all duration-300 ${collapsed ? "w-16" : "w-64"
                 }`}
         >
             {/* Header */}
-            <div className="bg-[#14161a] flex items-center justify-between p-4 border-b border-r border-gray-700">
+            <div className="bg-[#14161a] flex items-center justify-between p-4 border-b border-white/10 ">
                 <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 bg-[#fff] rounded-lg flex items-center justify-center">
+                    <div className="w-8 h-8 p-1 bg-[#162e2f] rounded-lg flex items-center justify-center">
+                        <TrendingUp className="h-8 w-8 text-primary-foreground text-[#1fe066]" />
                     </div>
                     {!collapsed && (
                         <div className="flex flex-col">
@@ -91,7 +93,7 @@ export function AppSidebar({ onLogout, collapsed, onToggle }: AppSidebarProps) {
             </nav>
 
             {/* Footer */}
-            <div className="bg-[#14161a] p-4 border-t border-gray-700">
+            <div className="bg-[#14161a] p-4 border-t border-black">
                 {!collapsed ? (
                     <div className="space-y-4">
                         {
@@ -99,12 +101,12 @@ export function AppSidebar({ onLogout, collapsed, onToggle }: AppSidebarProps) {
                                 <NavLink
                                     key={item.title}
                                     to={item.url}
-                                    className="flex items-center space-x-3 p-3 bg-gray-100 rounded-lg"
+                                    className="flex items-center space-x-3 p-3 bg-[#111418] rounded-lg"
                                 >
-                                    <UserCircle className="w-8 h-8 text-[#2977f5]" />
+                                    <UserCircle className="w-8 h-8 text-[#fff]" />
                                     <div className="flex-1 min-w-0">
-                                        <p className="text-sm font-medium truncate">{user?.name}</p>
-                                        <p className="text-xs text-gray-500 truncate">{user?.role}</p>
+                                        <p className="text-sm text-gray-100 font-medium truncate">{user?.name}</p>
+                                        <p className="text-xs text-gray-400 truncate">{user?.role}</p>
                                     </div>
                                 </NavLink>
                             ))
@@ -118,15 +120,23 @@ export function AppSidebar({ onLogout, collapsed, onToggle }: AppSidebarProps) {
                         </button>
                     </div>
                 ) : (
-                    <div className="flex flex-col space-y-2">
-                        <button className="w-8 h-8 p-0 mx-auto">
-                            <UserCircle className="w-5 h-5 text-[#2977f5]" />
-                        </button>
+                    <div className="flex flex-col space-y-2 gap-2">
+                        {
+                            profileItems.map((item) => (
+                                <NavLink
+                                    key={item.title}
+                                    to={item.url}
+                                    className="flex items-center justify-center bg-[#111418] rounded-lg"
+                                >
+                                    <UserCircle className="w-5 h-5 text-[#fff]" />
+                                </NavLink>
+                            ))
+                        }
                         <button
                             onClick={onLogout}
                             className="w-8 h-8 p-0 mx-auto text-red-600 hover:bg-red-100 rounded-lg flex items-center justify-center"
                         >
-                            <LogOut className="w-4 h-4" />
+                            <LogOut className="w-5 h-5" />
                         </button>
                     </div>
                 )}

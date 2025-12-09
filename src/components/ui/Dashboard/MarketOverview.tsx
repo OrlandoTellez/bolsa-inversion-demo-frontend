@@ -10,14 +10,14 @@ export const MarketOverview = () => {
     ];
 
     return (
-        <div className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-2xl p-6">
+        <div className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-md p-6">
             <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
                 <Activity className="w-5 h-5 text-blue-400" />
                 Resumen del Mercado
             </h3>
             <div className="space-y-4">
                 {marketData.map((item, index) => (
-                    <div key={index} className="flex items-center justify-between p-3 bg-white/5 rounded-xl hover:bg-white/10 transition-colors">
+                    <div key={index} className="flex items-center justify-between p-3 bg-white/5 rounded-md hover:bg-white/10 transition-colors">
                         <div>
                             <p className="text-gray-400 text-sm">{item.name}</p>
                             <p className="text-white font-bold text-lg">{item.value}</p>

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Shield, Eye, EyeOff } from "lucide-react";
+import { Shield, Eye, EyeOff, TrendingUp } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { Input } from "../common/Input";
@@ -38,10 +38,37 @@ export function LoginForm() {
 
     return (
         <div className="min-h-screen flex  justify-center text-white bg-[#111418]">
-            <div className="w-full bg-[#111e21]">
-                <h1>Hola mundo</h1>
+            <div className="bg-[#111e21] w-full shadow-2xl flex flex-col justify-center p-20 space-y-8">
+                <div className="text-center">
+                    <div className="flex justify-center mb-6">
+                        <div className="flex h-16 w-16 items-center justify-center bg-[#1ae6ce] rounded-2xl bg-primary">
+                            <TrendingUp className="h-8 w-8 text-primary-foreground text-black" />
+                        </div>
+                    </div>
+                    <h1 className="text-3xl font-bold text-foreground mb-4">
+                        Bolsa de Valores de Nicaragua
+                    </h1>
+                    <p className="text-muted-foreground text-lg text-gray-400">
+                        Plataforma de gestión de inversiones. Administra tu portafolio, compra y vende acciones de forma segura.
+                    </p>
+                    <div className="mt-8 grid grid-cols-3 gap-6 text-center">
+                        <div>
+                            <p className="text-3xl font-bold text-primary">C$ 985M</p>
+                            <p className="text-sm text-muted-foreground">Cap. de Mercado</p>
+                        </div>
+                        <div>
+                            <p className="text-3xl font-bold text-success">+12.5%</p>
+                            <p className="text-sm text-muted-foreground">Retorno Anual</p>
+                        </div>
+                        <div>
+                            <p className="text-3xl font-bold text-foreground">1,500+</p>
+                            <p className="text-sm text-muted-foreground">Inversionistas</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div className="w-full shadow-2xl flex flex-col justify-center p-8 space-y-8">
+
+            <div className="w-full shadow-2xl flex flex-col justify-center p-8 mt-18 ">
                 {/* Encabezado */}
                 <div className="text-center space-y-6">
                     <div>

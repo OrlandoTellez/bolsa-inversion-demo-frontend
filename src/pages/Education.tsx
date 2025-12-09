@@ -131,14 +131,14 @@ export const Education = () => {
             </div>
 
             {/* Custom Tabs */}
-            <div className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-2xl p-2 mb-6">
+            <div className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-md p-2 mb-6">
                 <div className="flex gap-2 overflow-x-auto">
                     {tabs.map((tab) => (
                         <button
                             key={tab.value}
                             onClick={() => setActiveTab(tab.value)}
                             className={cn(
-                                "flex items-center gap-2 px-4 py-2 rounded-xl font-medium transition-all whitespace-nowrap",
+                                "flex items-center gap-2 px-4 py-2 rounded-md font-medium transition-all whitespace-nowrap",
                                 activeTab === tab.value
                                     ? "bg-[#111418] text-white shadow-lg"
                                     : "text-gray-400 hover:text-white hover:bg-white/5"
@@ -154,7 +154,7 @@ export const Education = () => {
             {/* Noticias */}
             {activeTab === "noticias" && (
                 <div className="space-y-6 animate-fade-in">
-                    <div className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-2xl p-4">
+                    <div className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-md p-4">
                         <div className="flex flex-wrap items-center gap-4">
                             <div className="relative flex-1 min-w-[250px]">
                                 <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
@@ -177,7 +177,7 @@ export const Education = () => {
                         {newsArticles.map((article, index) => (
                             <article
                                 key={article.id}
-                                className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-2xl overflow-hidden hover:border-white/20 transition-all group"
+                                className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-md overflow-hidden hover:border-white/20 transition-all group"
                                 style={{ animationDelay: `${index * 100}ms` }}
                             >
                                 <div className="aspect-video overflow-hidden">

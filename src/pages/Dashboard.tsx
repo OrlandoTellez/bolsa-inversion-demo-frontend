@@ -52,7 +52,7 @@ export const Dashboard = () => {
                         <div>
                             <h2 className="mb-4 text-lg font-semibold text-white">Mis Posiciones</h2>
                             {positions.length === 0 ? (
-                                <div className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-2xl p-12 text-center">
+                                <div className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-md p-12 text-center">
                                     <PieChart className="w-16 h-16 text-gray-500 mx-auto mb-4" />
                                     <p className="text-gray-400 text-lg">No tienes posiciones activas</p>
                                     <p className="text-gray-500 text-sm mt-2">Compra acciones para comenzar a invertir</p>

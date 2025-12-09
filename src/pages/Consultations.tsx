@@ -47,7 +47,7 @@ export const Consultations = () => {
             </div>
 
             {/* Filters */}
-            <div className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-2xl p-6 mb-6 animate-fade-in">
+            <div className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-md p-6 mb-6 animate-fade-in">
                 <div className="flex items-center gap-2 mb-4">
                     <Filter className="h-5 w-5 text-blue-400" />
                     <h3 className="font-semibold text-white">Filtros de Búsqueda</h3>
@@ -59,7 +59,7 @@ export const Consultations = () => {
                         <select
                             value={selectedStock}
                             onChange={(e) => setSelectedStock(e.target.value)}
-                            className="w-full h-10 px-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full h-10 px-3 bg-white/5 border border-white/10 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                         >
                             <option value="" className="bg-[#14161a]">Seleccionar</option>
                             {stockOptions.map((stock) => (
@@ -106,7 +106,7 @@ export const Consultations = () => {
                 <>
                     {/* KPI Cards */}
                     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mb-6">
-                        <div className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-2xl p-4 animate-slide-up">
+                        <div className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-md p-4 animate-slide-up">
                             <div className="flex items-center gap-3">
                                 <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-green-500/20">
                                     <TrendingUp className="h-5 w-5 text-green-400" />
@@ -118,7 +118,7 @@ export const Consultations = () => {
                             </div>
                         </div>
 
-                        <div className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-2xl p-4 animate-slide-up" style={{ animationDelay: "100ms" }}>
+                        <div className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-md p-4 animate-slide-up" style={{ animationDelay: "100ms" }}>
                             <div className="flex items-center gap-3">
                                 <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-red-500/20">
                                     <TrendingDown className="h-5 w-5 text-red-400" />
@@ -130,7 +130,7 @@ export const Consultations = () => {
                             </div>
                         </div>
 
-                        <div className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-2xl p-4 animate-slide-up" style={{ animationDelay: "200ms" }}>
+                        <div className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-md p-4 animate-slide-up" style={{ animationDelay: "200ms" }}>
                             <div className="flex items-center gap-3">
                                 <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-500/20">
                                     <Activity className="h-5 w-5 text-blue-400" />
@@ -142,7 +142,7 @@ export const Consultations = () => {
                             </div>
                         </div>
 
-                        <div className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-2xl p-4 animate-slide-up" style={{ animationDelay: "300ms" }}>
+                        <div className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-md p-4 animate-slide-up" style={{ animationDelay: "300ms" }}>
                             <div className="flex items-center gap-3">
                                 <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-yellow-500/20">
                                     <Activity className="h-5 w-5 text-yellow-400" />
@@ -156,7 +156,7 @@ export const Consultations = () => {
                     </div>
 
                     {/* Results Table */}
-                    <div className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-2xl overflow-hidden animate-fade-in">
+                    <div className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-md overflow-hidden animate-fade-in">
                         <div className="flex items-center justify-between border-b border-white/10 p-4">
                             <h3 className="font-semibold text-white">Resultados ({queryResults.length})</h3>
                             <button className="flex items-center gap-2 px-3 py-2 bg-white/5 border border-white/10 rounded-xl text-white hover:bg-white/10 transition-all text-sm">

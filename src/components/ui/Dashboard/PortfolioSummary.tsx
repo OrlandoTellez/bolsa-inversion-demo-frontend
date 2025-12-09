@@ -47,7 +47,7 @@ export const PortfolioSummary = () => {
             {stats.map((stat, index) => (
                 <div
                     key={stat.label}
-                    className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-2xl p-5 hover:border-white/20 transition-all duration-300 hover:scale-105 group"
+                    className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-md p-5 hover:border-white/20 transition-all duration-300 hover:scale-105 group"
                     style={{ animationDelay: `${index * 100}ms` }}
                 >
                     <div className="flex items-start justify-between mb-3">

@@ -7,7 +7,7 @@ export const TransactionsTable = () => {
     return (
         <div>
             <h2 className="mb-4 text-lg font-semibold text-white">Transacciones Recientes</h2>
-            <div className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-2xl overflow-hidden">
+            <div className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-md overflow-hidden">
                 <div className="overflow-x-auto">
                     <table className="w-full">
                         <thead className="bg-white/5 border-b border-white/10">

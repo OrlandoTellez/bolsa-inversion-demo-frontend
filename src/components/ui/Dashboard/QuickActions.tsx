@@ -40,7 +40,7 @@ export const QuickActions = () => {
                 {actions.map((action, index) => (
                     <button
                         key={action.label}
-                        className={`bg-gradient-to-r ${action.color} ${action.hoverColor} p-4 rounded-xl text-white font-semibold shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2 group`}
+                        className={`bg-gradient-to-r ${action.color} ${action.hoverColor} p-4 rounded-md text-white font-semibold shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2 group`}
                         style={{ animationDelay: `${index * 100}ms` }}
                     >
                         <action.icon className="w-5 h-5 group-hover:rotate-12 transition-transform" />

@@ -94,14 +94,14 @@ export const Investments = () => {
                 </div>
 
                 {/* Custom Tabs */}
-                <div className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-2xl p-2">
+                <div className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-md p-2">
                     <div className="flex gap-2 overflow-x-auto">
                         {tabs.map((tab) => (
                             <button
                                 key={tab.value}
                                 onClick={() => setActiveTab(tab.value)}
                                 className={cn(
-                                    "flex items-center gap-2 px-4 py-2 rounded-xl font-medium transition-all whitespace-nowrap",
+                                    "flex items-center gap-2 px-4 py-2 rounded-md font-medium transition-all whitespace-nowrap",
                                     activeTab === tab.value
                                         ? "bg-[#111418] text-white shadow-lg"
                                         : "text-gray-400 hover:text-white hover:bg-white/5"
@@ -117,7 +117,7 @@ export const Investments = () => {
                 {/* Tab Content - Comprar Acciones */}
                 {activeTab === "comprar" && (
                     <div className="grid gap-6 lg:grid-cols-2 animate-fade-in">
-                        <div className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-2xl p-6">
+                        <div className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-md p-6">
                             <h3 className="mb-6 text-lg font-semibold text-white">Nueva Compra</h3>
                             <div className="space-y-4">
                                 <div className="space-y-2">
@@ -125,7 +125,7 @@ export const Investments = () => {
                                     <select
                                         value={selectedStock}
                                         onChange={(e) => setSelectedStock(e.target.value)}
-                                        className="w-full h-10 px-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        className="w-full h-10 px-3 bg-white/5 border border-white/10 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     >
                                         <option value="">Selecciona una acción</option>
                                         {stocks.map((stock) => (
@@ -152,7 +152,7 @@ export const Investments = () => {
                                     <select
                                         value={selectedBank}
                                         onChange={(e) => setSelectedBank(e.target.value)}
-                                        className="w-full h-10 px-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        className="w-full h-10 px-3 bg-white/5 border border-white/10 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     >
                                         <option value="">Selecciona un banco</option>
                                         {banks.map((bank) => (
@@ -164,7 +164,7 @@ export const Investments = () => {
                                 </div>
 
                                 {selectedStockData && quantity && (
-                                    <div className="rounded-xl bg-white/5 p-4 space-y-2 border border-white/10">
+                                    <div className="rounded-md bg-white/5 p-4 space-y-2 border border-white/10">
                                         <div className="flex justify-between text-sm">
                                             <span className="text-gray-400">Precio unitario:</span>
                                             <span className="font-medium text-white">C$ {selectedStockData.price.toFixed(2)}</span>
@@ -189,7 +189,7 @@ export const Investments = () => {
 
                                 <button
                                     className={cn(
-                                        "w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl font-semibold transition-all",
+                                        "w-full flex items-center justify-center gap-2 px-4 py-3 rounded-md font-semibold transition-all",
                                         !selectedStock || !quantity || !selectedBank || (selectedStockData && selectedStockData.price * Number(quantity) > balance)
                                             ? "bg-[#1b7e43] text-gray-400 cursor-not-allowed"
                                             : "bg-[#1fe066] from-green-500 to-emerald-600 text-white hover:shadow-lg hover:scale-105"
@@ -205,7 +205,7 @@ export const Investments = () => {
 
                         {/* Stock Info Card */}
                         {selectedStock && selectedStockData && (
-                            <div className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-2xl p-6">
+                            <div className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-md p-6">
                                 <div className="mb-6 flex items-center justify-between">
                                     <div>
                                         <h3 className="font-semibold text-white text-xl">{selectedStock}</h3>
@@ -222,7 +222,7 @@ export const Investments = () => {
                                         </p>
                                     </div>
                                 </div>
-                                <div className="h-48 flex items-center justify-center bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-xl border border-white/5">
+                                <div className="h-48 flex items-center justify-center bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-md border border-white/5">
                                     <div className="text-center">
                                         <TrendingUp className="w-12 h-12 text-blue-400 mx-auto mb-2" />
                                         <p className="text-gray-400 text-sm">Gráfico de tendencia</p>
@@ -237,7 +237,7 @@ export const Investments = () => {
                 {activeTab === "vender" && (
                     <div className="animate-fade-in">
                         {holdings.length === 0 ? (
-                            <div className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-2xl p-12 text-center">
+                            <div className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-md p-12 text-center">
                                 <TrendingDown className="mx-auto h-16 w-16 text-gray-500 mb-4" />
                                 <h3 className="mt-4 text-xl font-semibold text-white">Sin posiciones</h3>
                                 <p className="text-gray-400  mt-2">No tienes acciones para vender. Compra algunas primero.</p>
@@ -250,9 +250,9 @@ export const Investments = () => {
                                     const isPositive = gain >= 0;
 
                                     return (
-                                        <div key={holding.ticker} className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-2xl p-5 hover:border-white/20 transition-all hover:scale-105">
+                                        <div key={holding.ticker} className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-md p-5 hover:border-white/20 transition-all hover:scale-105">
                                             <div className="flex items-center justify-between mb-3">
-                                                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-500/20 font-semibold text-blue-400">
+                                                <div className="flex h-10 w-10 items-center justify-center rounded-md bg-blue-500/20 font-semibold text-blue-400">
                                                     {holding.ticker.slice(0, 2)}
                                                 </div>
                                                 <span className={cn(
@@ -286,7 +286,7 @@ export const Investments = () => {
                                                 </div>
                                             </div>
                                             <button
-                                                className="w-full mt-4 flex items-center justify-center gap-2 px-4 py-2 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 hover:bg-red-500/20 transition-all"
+                                                className="w-full mt-4 flex items-center justify-center gap-2 px-4 py-2 rounded-md bg-red-500/10 border border-red-500/30 text-red-400 hover:bg-red-500/20 transition-all"
                                                 onClick={() => handleSellClick(holding.ticker)}
                                             >
                                                 <TrendingDown className="w-4 h-4" />
@@ -303,7 +303,7 @@ export const Investments = () => {
                 {/* Tab Content - Buscar Precios */}
                 {activeTab === "buscar" && (
                     <div className="space-y-6 animate-fade-in">
-                        <div className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-2xl p-6">
+                        <div className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-md p-6">
                             <h3 className="mb-4 text-lg font-semibold text-white">Buscar Precios por Fecha</h3>
                             <div className="flex gap-4 flex-wrap">
                                 <div className="flex-1 min-w-[200px]">
@@ -311,7 +311,7 @@ export const Investments = () => {
                                     <select
                                         value={searchFilter}
                                         onChange={(e) => setSearchFilter(e.target.value)}
-                                        className="w-full mt-2 h-10 px-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        className="w-full mt-2 h-10 px-3 bg-white/5 border border-white/10 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     >
                                         <option value="all">Todas las empresas</option>
                                         {stocks.map((stock) => (
@@ -326,7 +326,7 @@ export const Investments = () => {
                                     <Input type="date" className="mt-2" value={searchDate} onChange={(e) => setSearchDate(e.target.value)} />
                                 </div>
                                 <div className="flex items-end">
-                                    <button className="flex items-center gap-2 px-6 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl hover:shadow-lg transition-all">
+                                    <button className="flex items-center gap-2 px-6 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-md hover:shadow-lg transition-all">
                                         <Search className="h-4 w-4" />
                                         Buscar
                                     </button>
@@ -336,7 +336,7 @@ export const Investments = () => {
 
                         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
                             {stocks.map((stock) => (
-                                <div key={stock.ticker} className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-2xl p-5 hover:border-white/20 transition-all hover:scale-105">
+                                <div key={stock.ticker} className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-md p-5 hover:border-white/20 transition-all hover:scale-105">
                                     <div className="flex items-center gap-3 mb-3">
                                         <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-purple-500/20">
                                             <Building2 className="h-5 w-5 text-purple-400" />
@@ -363,7 +363,7 @@ export const Investments = () => {
                 {/* Tab Content - Inversionistas */}
                 {activeTab === "inversionistas" && (
                     <div className="space-y-6 animate-fade-in">
-                        <div className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-2xl p-6">
+                        <div className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-md p-6">
                             <div className="flex items-center gap-4 flex-wrap">
                                 <div className="flex-1 min-w-[250px]">
                                     <div className="relative">
@@ -374,7 +374,7 @@ export const Investments = () => {
                                 <select
                                     value={investorFilter}
                                     onChange={(e) => setInvestorFilter(e.target.value)}
-                                    className="w-[180px] h-10 px-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    className="w-[180px] h-10 px-3 bg-white/5 border border-white/10 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 >
                                     <option value="all">Todos</option>
                                     <option value="tech">Tecnología</option>
@@ -386,7 +386,7 @@ export const Investments = () => {
 
                         <div className="grid gap-4 md:grid-cols-2">
                             {investors.map((investor) => (
-                                <div key={investor.id} className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-2xl p-6 hover:border-white/20 transition-all">
+                                <div key={investor.id} className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-md p-6 hover:border-white/20 transition-all">
                                     <div className="flex items-start gap-4">
                                         <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-purple-600">
                                             <Users className="h-6 w-6 text-white" />
@@ -405,7 +405,7 @@ export const Investments = () => {
                                                 </div>
                                             </div>
                                         </div>
-                                        <button className="px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-white hover:bg-white/10 transition-all text-sm">
+                                        <button className="px-4 py-2 bg-white/5 border border-white/10 rounded-md text-white hover:bg-white/10 transition-all text-sm">
                                             Ver Perfil
                                         </button>
                                     </div>

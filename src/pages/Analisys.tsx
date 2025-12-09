@@ -88,14 +88,14 @@ export const Analisys = () => {
             </div>
 
             {/* Custom Tabs */}
-            <div className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-2xl p-2 mb-6">
+            <div className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-md p-2 mb-6">
                 <div className="flex gap-2 overflow-x-auto">
                     {tabs.map((tab) => (
                         <button
                             key={tab.value}
                             onClick={() => setActiveTab(tab.value)}
                             className={cn(
-                                "flex items-center gap-2 px-4 py-2 rounded-xl font-medium transition-all whitespace-nowrap",
+                                "flex items-center gap-2 px-4 py-2 rounded-md font-medium transition-all whitespace-nowrap",
                                 activeTab === tab.value
                                     ? "bg-[#111418] text-white shadow-lg"
                                     : "text-gray-400 hover:text-white hover:bg-white/5"
@@ -111,7 +111,7 @@ export const Analisys = () => {
             {/* Gráfico Histórico */}
             {activeTab === "grafico" && (
                 <div className="space-y-6 animate-fade-in">
-                    <div className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-2xl p-6">
+                    <div className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-md p-6">
                         <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
                             <div className="flex items-center gap-4 flex-wrap">
                                 <select
@@ -187,7 +187,7 @@ export const Analisys = () => {
                     </div>
 
                     {/* Volume Chart */}
-                    <div className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-2xl p-6">
+                    <div className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-md p-6">
                         <h3 className="mb-4 font-semibold text-white">Volumen de Transacciones</h3>
                         <div className="h-[200px] bg-black/20 rounded-xl p-4">
                             <ResponsiveContainer width="100%" height="100%">
@@ -214,7 +214,7 @@ export const Analisys = () => {
             {/* Panel Comparativo */}
             {activeTab === "comparativo" && (
                 <div className="space-y-6 animate-fade-in">
-                    <div className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-2xl p-6">
+                    <div className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-md p-6">
                         <div className="flex flex-wrap items-center gap-4 mb-6">
                             <span className="text-sm font-medium text-white">Comparar:</span>
                             {compareStocks.map((stock) => (
@@ -222,7 +222,7 @@ export const Analisys = () => {
                                     key={stock}
                                     onClick={() => toggleStock(stock)}
                                     className={cn(
-                                        "px-4 py-2 rounded-xl font-medium text-sm transition-all",
+                                        "px-4 py-2 rounded-md font-medium text-sm transition-all",
                                         selectedStocks.includes(stock)
                                             ? "text-white shadow-lg"
                                             : "bg-white/5 border border-white/10 text-gray-400 hover:text-white hover:bg-white/10"
@@ -236,7 +236,7 @@ export const Analisys = () => {
                             ))}
                         </div>
 
-                        <div className="h-[400px] bg-black/20 rounded-xl p-4">
+                        <div className="h-[400px] bg-black/20 rounded-md p-4">
                             <ResponsiveContainer width="100%" height="100%">
                                 <LineChart data={historicalData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
                                     <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
@@ -272,7 +272,7 @@ export const Analisys = () => {
             {activeTab === "extremos" && (
                 <div className="grid gap-4 md:grid-cols-2 animate-fade-in">
                     {extremeData.map((stock) => (
-                        <div key={stock.ticker} className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-2xl p-6 hover:border-white/20 transition-all">
+                        <div key={stock.ticker} className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-md p-6 hover:border-white/20 transition-all">
                             <div className="flex items-center gap-3 mb-4">
                                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-500/20 font-bold text-blue-400">
                                     {stock.ticker.slice(0, 2)}
