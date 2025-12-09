@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router-dom"
 import { LoginForm } from "../components/auth/LoginForm"
+import { RegisterForm } from "../components/auth/RegisterForm"
 import App from "../App"
 import { PrivateRoute } from "./PrivateRoutes"
 import { Dashboard } from "../pages/Dashboard"
@@ -39,6 +40,7 @@ export const AppRoutes = () => {
     return (
         <Routes>
             <Route path="/auth/login" element={<LoginForm />} />
+            <Route path="/auth/register" element={<RegisterForm />} />
 
             <Route element={<App />}>
                 <Route

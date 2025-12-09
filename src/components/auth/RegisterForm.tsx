@@ -1,43 +1,42 @@
 import { useState } from "react";
-import { Shield, Eye, EyeOff, TrendingUp } from "lucide-react";
+import { Eye, EyeOff, TrendingUp, UserPlus } from "lucide-react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { Input } from "../common/Input";
 
-export function LoginForm() {
-    const [username, setUsername] = useState('admin@bolsa.ni');
-    const [password, setPassword] = useState('admin123');
+export function RegisterForm() {
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState('');
-    const { login, isLoading } = useAuth();
+    const { register, isLoading } = useAuth();
     const navigate = useNavigate();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError('');
 
-        if (!username || !password) {
-            setError('Por favor ingrese email y contraseña');
+        if (!name || !email || !username || !password) {
+            setError('Por favor complete todos los campos');
             return;
         }
 
         try {
-            const success = await login(username, password);
+            const success = await register(name, email, username, password);
             if (success) {
                 navigate('/');
             } else {
-                setError('Credenciales incorrectas');
+                setError('Error al registrar usuario. Intente con otro usuario o correo.');
             }
         } catch {
-            setError('Error al iniciar sesión');
+            setError('Error al registrar usuario');
         }
     };
 
-    if (error) return <div>Error: {error}</div>;
-
-
     return (
-        <div className="min-h-screen flex  justify-center text-white bg-[#111418]">
+        <div className="min-h-screen flex justify-center text-white bg-[#111418]">
             <div className="bg-[#111e21] w-full shadow-2xl flex flex-col justify-center p-20 space-y-8">
                 <div className="text-center">
                     <div className="flex justify-center mb-6">
@@ -49,7 +48,7 @@ export function LoginForm() {
                         Bolsa de Valores de Nicaragua
                     </h1>
                     <p className="text-muted-foreground text-lg text-gray-400">
-                        Plataforma de gestión de inversiones. Administra tu portafolio, compra y vende acciones de forma segura.
+                        Únete a nuestra plataforma y comienza a gestionar tus inversiones hoy mismo.
                     </p>
                     <div className="mt-8 grid grid-cols-3 gap-6 text-center">
                         <div>
@@ -72,21 +71,49 @@ export function LoginForm() {
                 {/* Encabezado */}
                 <div className="text-center space-y-6">
                     <div>
-                        <h1 className="text-2xl font-bold text-foreground">Bienvenido</h1>
+                        <h1 className="text-2xl font-bold text-foreground">Crear Cuenta</h1>
                         <p className="text-muted-foreground mt-2">
-                            Inicie sesion para iniciar la simulación
+                            Ingrese sus datos para registrarse
                         </p>
                     </div>
                 </div>
 
                 {/* Formulario */}
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-4">
+                    {error && <div className="text-red-500 text-sm text-center">{error}</div>}
+
+                    <div className="space-y-2">
+                        <label className="text-sm font-medium">Nombre Completo</label>
+                        <Input
+                            id="name"
+                            type="text"
+                            placeholder="Juan Pérez"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            required
+                            className="h-12"
+                        />
+                    </div>
+
                     <div className="space-y-2">
                         <label className="text-sm font-medium">Correo Electrónico</label>
                         <Input
+                            id="email"
+                            type="email"
+                            placeholder="juan@example.com"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                            className="h-12"
+                        />
+                    </div>
+
+                    <div className="space-y-2">
+                        <label className="text-sm font-medium">Usuario</label>
+                        <Input
                             id="username"
                             type="text"
-                            placeholder="doctor@hospital.gob.ni"
+                            placeholder="juanperez"
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
                             required
@@ -124,32 +151,29 @@ export function LoginForm() {
 
                     <button
                         type="submit"
-                        className="w-full h-12 bg-[#111e21] hover:bg-primary-hover font-medium rounded-md text-white"
+                        className="w-full h-12 bg-[#111e21] hover:bg-primary-hover font-medium rounded-md text-white mt-4"
                         disabled={isLoading}
                     >
                         {isLoading ? (
                             <div className="flex items-center space-x-2 justify-center">
                                 <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                                <span>Verificando...</span>
+                                <span>Registrando...</span>
                             </div>
                         ) : (
                             <div className="flex items-center space-x-2 justify-center">
-                                <Shield className="w-4 h-4" />
-                                <span>Iniciar Sesión</span>
+                                <UserPlus className="w-4 h-4" />
+                                <span>Registrarse</span>
                             </div>
                         )}
                     </button>
                 </form>
 
                 {/* Footer */}
-                <div className="pt-6 border-t text-center">
-                    <p className="text-xs text-muted-foreground mb-4">
-                        Esta es una demostración. Los datos son ficticios.
-                    </p>
+                <div className="pt-6 border-t text-center mt-6">
                     <p className="text-sm text-muted-foreground">
-                        ¿No tienes una cuenta?{" "}
-                        <Link to="/auth/register" className="text-[#1ae6ce] hover:underline font-medium">
-                            Regístrate aquí
+                        ¿Ya tienes una cuenta?{" "}
+                        <Link to="/auth/login" className="text-[#1ae6ce] hover:underline font-medium">
+                            Inicia Sesión
                         </Link>
                     </p>
                 </div>

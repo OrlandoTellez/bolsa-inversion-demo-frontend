@@ -12,6 +12,7 @@ interface User {
 interface AuthContextType {
     user: User | null;
     login: (email: string, password: string) => Promise<boolean>;
+    register: (name: string, email: string, username: string, password: string) => Promise<boolean>;
     logout: () => void;
     isLoading: boolean;
     token: string | null;
@@ -63,6 +64,20 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         }
     };
 
+    const register = async (name: string, email: string, username: string, password: string): Promise<boolean> => {
+        setIsLoading(true);
+        try {
+            const newUser = await authAPI.register({ name, email, username, password });
+
+            const loginSuccess = await login(username, password);
+            return loginSuccess;
+        } catch (err) {
+            console.error('Registration error:', err);
+            setIsLoading(false);
+            return false;
+        }
+    };
+
 
     const logout = () => {
         setUser(null);
@@ -72,7 +87,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ user, login, logout, isLoading, token }}>
+        <AuthContext.Provider value={{ user, login, register, logout, isLoading, token }}>
             {children}
         </AuthContext.Provider>
     );
