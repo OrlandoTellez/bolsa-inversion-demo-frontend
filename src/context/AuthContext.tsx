@@ -67,7 +67,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const register = async (name: string, email: string, username: string, password: string): Promise<boolean> => {
         setIsLoading(true);
         try {
-            const newUser = await authAPI.register({ name, email, username, password });
+            await authAPI.register({ name, email, username, password });
 
             const loginSuccess = await login(username, password);
             return loginSuccess;
