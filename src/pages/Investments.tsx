@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { PortfolioBar } from "../components/ui/Dashboard/PortfolioBar";
 import { Input } from "../components/common/Input";
-import { ArrowUpRight, ArrowDownRight, Search, TrendingUp, TrendingDown, Building2, Users, X, History } from "lucide-react";
+import { ArrowUpRight, ArrowDownRight, Search, TrendingUp, TrendingDown, Building2, Users, X, History, Activity } from "lucide-react";
+import { StockChart } from "../components/ui/Dashboard/StockChart";
 import { cn } from "../utils/cn";
 import { usePortfolio } from "../context/PortafolioContext";
 import { ResponsiveContainer, AreaChart, Area, YAxis } from "recharts";
@@ -44,6 +45,7 @@ export const Investments = () => {
     const [searchDate, setSearchDate] = useState<string>("");
     const [searchFilter, setSearchFilter] = useState<string>("all");
     const [investorFilter, setInvestorFilter] = useState<string>("all");
+    const [tradingStock, setTradingStock] = useState<string>("");
 
     // Sell modal state
     const [sellModalOpen, setSellModalOpen] = useState(false);
@@ -89,6 +91,7 @@ export const Investments = () => {
     };
 
     const tabs = [
+        { value: "trading", label: "Trading en Vivo", icon: Activity },
         { value: "comprar", label: "Comprar Acciones", icon: TrendingUp },
         { value: "vender", label: "Vender Acciones", icon: TrendingDown },
         { value: "historial", label: "Historial", icon: History },
@@ -129,6 +132,68 @@ export const Investments = () => {
                         ))}
                     </div>
                 </div>
+
+                {/* Tab Content - Trading en Vivo */}
+                {activeTab === "trading" && (
+                    <div className="space-y-6 animate-fade-in">
+                        <div className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-md p-6">
+                            <h3 className="mb-4 text-lg font-semibold text-white">Seleccionar Mercado</h3>
+                            <div className="max-w-md">
+                                <label className="text-sm font-medium text-gray-300">Empresa para Trading</label>
+                                <select
+                                    value={tradingStock}
+                                    onChange={(e) => setTradingStock(e.target.value)}
+                                    className="w-full mt-2 h-10 px-3 bg-white/5 border border-white/10 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                >
+                                    <option value="">Selecciona una acción para operar</option>
+                                    {stocks.map((stock) => (
+                                        <option key={stock.ticker} value={stock.ticker} className="bg-[#14161a]">
+                                            {stock.company} (C$ {stock.price.toFixed(2)})
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                        </div>
+
+                        {tradingStock ? (
+                            (() => {
+                                const stock = stocks.find(s => s.ticker === tradingStock);
+                                const holding = holdings.find(h => h.ticker === tradingStock);
+
+                                // Memoize the initial price so it doesn't change when global stock price updates
+                                // This prevents the chart from resetting its history/simulation
+                                const chartInitialPrice = useMemo(() => {
+                                    return stock ? stock.price : 0;
+                                }, [tradingStock]); // Only update when the USER changes the stock selection
+
+                                if (!stock) return null;
+
+                                return (
+                                    <StockChart
+                                        key={tradingStock}
+                                        ticker={stock.ticker}
+                                        companyName={stock.company}
+                                        initialPrice={chartInitialPrice}
+                                        balance={balance}
+                                        currentHoldings={holding?.shares || 0}
+                                        onBuy={async (qty, price) => {
+                                            return await buyStock(stock.ticker, qty, "Bolsa de Valores", price);
+                                        }}
+                                        onSell={async (qty, price) => {
+                                            return await sellStock(stock.ticker, qty, "Bolsa de Valores", price);
+                                        }}
+                                    />
+                                );
+                            })()
+                        ) : (
+                            <div className="text-center py-12 bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-md">
+                                <Activity className="w-16 h-16 text-gray-500 mx-auto mb-4" />
+                                <p className="text-gray-400 text-lg">Selecciona una empresa para ver el gráfico en tiempo real</p>
+                                <p className="text-gray-500 text-sm mt-2">Los precios se actualizan cada 5 segundos</p>
+                            </div>
+                        )}
+                    </div>
+                )}
 
                 {/* Tab Content - Comprar Acciones */}
                 {activeTab === "comprar" && (

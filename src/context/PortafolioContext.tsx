@@ -15,8 +15,8 @@ interface PortfolioContextType {
     totalGainLoss: number;
     totalGainLossPercent: number;
     isLoading: boolean;
-    buyStock: (ticker: string, shares: number, bank: string) => Promise<boolean>;
-    sellStock: (ticker: string, shares: number, bank: string) => Promise<boolean>;
+    buyStock: (ticker: string, shares: number, bank: string, price?: number) => Promise<boolean>;
+    sellStock: (ticker: string, shares: number, bank: string, price?: number) => Promise<boolean>;
     refreshPortfolio: () => Promise<void>;
     refreshStocks: () => Promise<void>;
 }
@@ -119,9 +119,34 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
         }
     }, [token, refreshStocks, refreshPortfolio]);
 
-    const buyStock = async (ticker: string, shares: number, bank: string): Promise<boolean> => {
-        // Try backend first if available
-        if (token && backendAvailable) {
+    // Global Price Simulation
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setStocks(prevStocks => {
+                return prevStocks.map(stock => {
+                    const volatility = 0.02; // 2% max change
+                    const changePercent = (Math.random() * volatility * 2 - volatility);
+                    const newPrice = Math.max(0.01, stock.price * (1 + changePercent));
+
+                    // Update change percentage relative to original/previous close (simplified here to just be daily change)
+                    // For demo purposes, we just add the instant change to the daily change
+                    const newChange = stock.change + (changePercent * 100);
+
+                    return {
+                        ...stock,
+                        price: newPrice,
+                        change: Number(newChange.toFixed(2))
+                    };
+                });
+            });
+        }, 5000);
+
+        return () => clearInterval(interval);
+    }, []);
+
+    const buyStock = async (ticker: string, shares: number, bank: string, price?: number): Promise<boolean> => {
+        // Try backend first if available AND no custom price (simulation)
+        if (token && backendAvailable && !price) {
             try {
                 const transaction = await transactionsAPI.buy({ ticker, shares, bank });
                 await refreshPortfolio();
@@ -140,7 +165,8 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
             return false;
         }
 
-        const total = stock.price * shares;
+        const currentPrice = price || stock.price;
+        const total = currentPrice * shares;
         if (total > balance) {
             toast.error("Saldo insuficiente");
             return false;
@@ -154,9 +180,9 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
             const existing = prev.find(h => h.ticker === ticker);
             if (existing) {
                 const newShares = existing.shares + shares;
-                const newAvg = ((existing.shares * existing.avgPrice) + (shares * stock.price)) / newShares;
+                const newAvg = ((existing.shares * existing.avgPrice) + (shares * currentPrice)) / newShares;
                 return prev.map(h => h.ticker === ticker
-                    ? { ...h, shares: newShares, avgPrice: newAvg, currentPrice: stock.price }
+                    ? { ...h, shares: newShares, avgPrice: newAvg, currentPrice: currentPrice }
                     : h
                 );
             }
@@ -164,8 +190,8 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
                 ticker,
                 company: stock.company,
                 shares,
-                avgPrice: stock.price,
-                currentPrice: stock.price,
+                avgPrice: currentPrice,
+                currentPrice: currentPrice,
                 purchaseDate: new Date().toISOString().split('T')[0]
             }];
         });
@@ -177,7 +203,7 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
             ticker,
             company: stock.company,
             shares,
-            price: stock.price,
+            price: currentPrice,
             total,
             date: new Date().toLocaleString("es-NI"),
             bank,
@@ -188,9 +214,9 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
         return true;
     };
 
-    const sellStock = async (ticker: string, shares: number, bank: string): Promise<boolean> => {
-        // Try backend first if available
-        if (token && backendAvailable) {
+    const sellStock = async (ticker: string, shares: number, bank: string, price?: number): Promise<boolean> => {
+        // Try backend first if available AND no custom price (simulation)
+        if (token && backendAvailable && !price) {
             try {
                 const transaction = await transactionsAPI.sell({ ticker, shares, bank });
                 await refreshPortfolio();
@@ -213,8 +239,8 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
             return false;
         }
 
-        const price = stocks.find(s => s.ticker === ticker)?.price || holding.currentPrice;
-        const total = price * shares;
+        const currentPrice = price || stocks.find(s => s.ticker === ticker)?.price || holding.currentPrice;
+        const total = currentPrice * shares;
 
         // Update balance
         setBalance(prev => prev + total);
@@ -234,7 +260,7 @@ export function PortfolioProvider({ children }: { children: React.ReactNode }) {
             ticker,
             company: holding.company,
             shares,
-            price,
+            price: currentPrice,
             total,
             date: new Date().toLocaleString("es-NI"),
             bank,
