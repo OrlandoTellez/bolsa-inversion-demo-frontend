@@ -2,7 +2,7 @@ import { MarketOverview } from "../components/ui/Dashboard/MarketOverview";
 import { PortfolioBar } from "../components/ui/Dashboard/PortfolioBar";
 import { PortfolioSummary } from "../components/ui/Dashboard/PortfolioSummary";
 import { PositionCard } from "../components/ui/Dashboard/PositionCard";
-import { QuickActions } from "../components/ui/Dashboard/QuickActions";
+// import { QuickActions } from "../components/ui/Dashboard/QuickActions";
 import { TopMovers } from "../components/ui/Dashboard/TopMovers";
 import { TransactionsTable } from "../components/ui/Dashboard/TransactionTable";
 import { useAuth } from "../context/AuthContext";
@@ -46,7 +46,7 @@ export const Dashboard = () => {
                         <PortfolioSummary />
 
                         {/* Quick Actions */}
-                        <QuickActions />
+                        {/* <QuickActions /> */}
 
                         {/* Positions Grid */}
                         <div>
