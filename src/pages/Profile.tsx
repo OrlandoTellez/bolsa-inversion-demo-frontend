@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Input } from "../components/common/Input";
 import { useAuth } from "../context/AuthContext";
+import { usePortfolio } from "../context/PortafolioContext";
 import {
     User,
     Mail,
@@ -21,8 +22,18 @@ import { cn } from "../utils/cn";
 
 export const Profile = () => {
     const { user, logout } = useAuth();
+    const { balance, holdings } = usePortfolio();
     const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState("personal");
+
+    // Calculate total portfolio value
+    const holdingsValue = holdings.reduce((acc, holding) => acc + (holding.currentPrice * holding.shares), 0);
+    const totalPortfolioValue = balance + holdingsValue;
+
+    // Calculate ROI (mock calculation based on holdings performance)
+    const totalCost = holdings.reduce((acc, holding) => acc + (holding.avgPrice * holding.shares), 0);
+    const totalGain = holdingsValue - totalCost;
+    const roi = totalCost > 0 ? (totalGain / totalCost) * 100 : 0;
 
     if (!user) {
         navigate("/auth");
@@ -91,16 +102,21 @@ export const Profile = () => {
                                             <Briefcase className="h-4 w-4" />
                                         </div>
                                         <p className="text-lg font-bold text-white">
-                                            C$ 250,000
+                                            C$ {totalPortfolioValue.toLocaleString("es-NI", { minimumFractionDigits: 2 })}
                                         </p>
-                                        <p className="text-xs text-gray-500">Portafolio</p>
+                                        <p className="text-xs text-gray-500">Valor Total</p>
                                     </div>
                                     <div>
                                         <div className="flex items-center justify-center gap-1 text-gray-400 mb-1">
                                             <TrendingUp className="h-4 w-4" />
                                         </div>
-                                        <p className="text-lg font-bold text-green-400">+31.08%</p>
-                                        <p className="text-xs text-gray-500">Rentabilidad</p>
+                                        <p className={cn(
+                                            "text-lg font-bold",
+                                            roi >= 0 ? "text-green-400" : "text-red-400"
+                                        )}>
+                                            {roi >= 0 ? "+" : ""}{roi.toFixed(2)}%
+                                        </p>
+                                        <p className="text-xs text-gray-500">Rentabilidad Global</p>
                                     </div>
                                 </div>
                             </div>
