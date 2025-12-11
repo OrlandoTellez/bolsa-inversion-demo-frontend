@@ -61,7 +61,7 @@ export const Profile = () => {
             <div className="grid gap-6 lg:grid-cols-3">
                 {/* Profile Card */}
                 <div className="lg:col-span-1">
-                    <div className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-2xl p-6 animate-fade-in">
+                    <div className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-sm p-6 animate-fade-in">
                         <div className="flex flex-col items-center text-center">
                             <div className={cn(
                                 "flex h-24 w-24 items-center justify-center rounded-full mb-4",
@@ -119,16 +119,16 @@ export const Profile = () => {
                 {/* Settings Tabs */}
                 <div className="lg:col-span-2">
                     {/* Custom Tabs */}
-                    <div className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-2xl p-2 mb-6">
+                    <div className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-sm p-2 mb-6">
                         <div className="flex gap-2 overflow-x-auto">
                             {tabs.map((tab) => (
                                 <button
                                     key={tab.value}
                                     onClick={() => setActiveTab(tab.value)}
                                     className={cn(
-                                        "flex items-center gap-2 px-4 py-2 rounded-xl font-medium transition-all whitespace-nowrap text-sm",
+                                        "flex items-center gap-2 px-4 py-2 rounded-sm font-medium transition-all whitespace-nowrap text-sm",
                                         activeTab === tab.value
-                                            ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg"
+                                            ? "bg-[#111418] text-white shadow-lg"
                                             : "text-gray-400 hover:text-white hover:bg-white/5"
                                     )}
                                 >
@@ -141,7 +141,7 @@ export const Profile = () => {
 
                     {/* Personal Info */}
                     {activeTab === "personal" && (
-                        <div className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-2xl p-6 animate-fade-in">
+                        <div className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-sm p-6 animate-fade-in">
                             <div className="flex items-center justify-between mb-6">
                                 <h3 className="text-lg font-semibold text-white">Información Personal</h3>
                                 <button className="flex items-center gap-2 px-3 py-2 bg-white/5 border border-white/10 rounded-xl text-white hover:bg-white/10 transition-all text-sm">
@@ -212,7 +212,7 @@ export const Profile = () => {
 
                     {/* Security */}
                     {activeTab === "seguridad" && (
-                        <div className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-2xl p-6 animate-fade-in">
+                        <div className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-sm p-6 animate-fade-in">
                             <h3 className="text-lg font-semibold text-white mb-6">Seguridad de la Cuenta</h3>
 
                             <div className="space-y-6">
@@ -268,7 +268,7 @@ export const Profile = () => {
 
                     {/* Notifications */}
                     {activeTab === "notificaciones" && (
-                        <div className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-2xl p-6 animate-fade-in">
+                        <div className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-sm p-6 animate-fade-in">
                             <h3 className="text-lg font-semibold text-white mb-6">Preferencias de Notificación</h3>
 
                             <div className="space-y-4">
@@ -296,7 +296,7 @@ export const Profile = () => {
 
                     {/* Billing */}
                     {activeTab === "facturacion" && (
-                        <div className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-2xl p-6 animate-fade-in">
+                        <div className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-sm p-6 animate-fade-in">
                             <h3 className="text-lg font-semibold text-white mb-6">Métodos de Pago</h3>
 
                             <div className="space-y-4">

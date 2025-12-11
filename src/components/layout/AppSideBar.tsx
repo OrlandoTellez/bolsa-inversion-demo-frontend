@@ -93,7 +93,7 @@ export function AppSidebar({ onLogout, collapsed, onToggle }: AppSidebarProps) {
             </nav>
 
             {/* Footer */}
-            <div className="bg-[#14161a] p-4 border-t border-black">
+            <div className="bg-[#14161a] p-4 border-t border-white/10">
                 {!collapsed ? (
                     <div className="space-y-4">
                         {
