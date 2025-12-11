@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Input } from "../components/common/Input";
-import { Newspaper, AlertTriangle, FileText, Search, ExternalLink, Calendar, Tag, Download, GraduationCap, BookOpen, TrendingUp, ShieldCheck, ArrowUpRight, X } from "lucide-react";
+import { Newspaper, AlertTriangle, FileText, Search, ExternalLink, Calendar, Tag, GraduationCap, BookOpen, TrendingUp, ShieldCheck, ArrowUpRight, X } from "lucide-react";
 import { cn } from "../utils/cn";
+import { Link } from "react-router-dom";
 
 const newsArticles = [
     {
@@ -104,6 +105,7 @@ const resources = [
         type: "PDF",
         size: "2.5 MB",
         date: "2024-01-01",
+        url: "https://cdn2.hubspot.net/hubfs/559052/Guia%20para%20inversionistas%20principiantes.pdf"
     },
     {
         id: 2,
@@ -111,6 +113,7 @@ const resources = [
         type: "PDF",
         size: "8.2 MB",
         date: "2024-01-10",
+        url: "https://www.bcn.gob.ni/sites/default/files/documentos/Informe%20Anual%202023.pdf"
     },
     {
         id: 3,
@@ -118,12 +121,13 @@ const resources = [
         type: "PDF",
         size: "5.1 MB",
         date: "2023-12-15",
+        url: "https://docs.selfbank.es/productos/docs/12_claves_analisis_tecnico.pdf"
     },
     {
         id: 4,
         title: "Glosario de Términos Financieros",
         type: "Link",
-        url: "#",
+        url: "https://bcn.gob.ni/sites/default/files/banco/glosario/Glosario_Terminos_BCN.pdf",
         date: "2023-11-20",
     },
 ];
@@ -376,7 +380,7 @@ export const Education = () => {
                     {resources.map((resource, index) => (
                         <div
                             key={resource.id}
-                            className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-2xl p-5 hover:border-white/20 transition-all"
+                            className="bg-gradient-to-br from-[#1a1d24] to-[#14161a] border border-white/10 rounded-sm p-5 hover:border-white/20 transition-all"
                             style={{ animationDelay: `${index * 100}ms` }}
                         >
                             <div className="flex items-start gap-4">
@@ -397,19 +401,9 @@ export const Education = () => {
                                         {new Date(resource.date).toLocaleDateString("es-NI")}
                                     </span>
                                 </div>
-                                <button className="flex items-center gap-1 px-3 py-2 bg-white/5 border border-white/10 rounded-xl text-white hover:bg-white/10 transition-all text-sm">
-                                    {resource.type === "PDF" ? (
-                                        <>
-                                            <Download className="h-3 w-3" />
-                                            Descargar
-                                        </>
-                                    ) : (
-                                        <>
-                                            <ExternalLink className="h-3 w-3" />
-                                            Abrir
-                                        </>
-                                    )}
-                                </button>
+                                <Link className="flex items-center gap-1 px-3 py-2 bg-white/5 border border-white/10 rounded-xl text-white hover:bg-white/10 transition-all text-sm" to={resource.url} target="_blank">
+                                    Descargar
+                                </Link>
                             </div>
                         </div>
                     ))}
